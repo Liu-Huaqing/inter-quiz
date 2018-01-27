@@ -1,0 +1,46 @@
+[
+  {
+    "items": [
+      {
+        "title": "我的名字是?",
+        "selects": [
+          "鸣人",
+          "佐助",
+          "小樱"
+        ],
+        "resultIndex": "0"
+      },
+      {
+        "title": "滴滴是做什么的？",
+        "selects": [
+          "打车的",
+          "开车的",
+          "拉皮条"
+        ],
+        "resultIndex": "2"
+      }
+    ]
+  },
+  {
+    "items": [
+      {
+        "title": "我的名字是?",
+        "selects": [
+          "佐助",
+          "鸣人",
+          "小樱"
+        ],
+        "resultIndex": "1"
+      },
+      {
+        "title": "GrowingIO是做什么的？",
+        "selects": [
+          "分析数据",
+          "增长黑客",
+          "黑客增长"
+        ],
+        "resultIndex": "1"
+      }
+    ]
+  }
+]

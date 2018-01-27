@@ -1,0 +1,15 @@
+{
+  "name": "interact-quiz",
+  "version": "1.0.0",
+  "author": "liuhuaqing",
+  "description": "A simple express project.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.12.3"
+  },
+  "devDependencies": {
+    "fastclick": "^1.0.6"
+  }
+}

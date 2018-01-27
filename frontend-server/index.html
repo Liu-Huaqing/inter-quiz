@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1 width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+  />
+  <title>互动答题</title>
+  <script src="./client/lib/vue.min.js"></script>
+  <script type="application/javascript" src="./client/lib/fastclick.js"></script>
+  <script src="./client/lib/reconnecting-websocket.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./client/main.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="online-user font-tip-title">在线 {{online_user}} 人</div>
+    <!-- title area -->
+    <div class="title">
+      <div class="title-company font-big-title">M企业</div>
+      <div class="font-sec-title title-year">2017~2018 年会答题小游戏</div>
+    </div>
+
+    <div class="interact-panel">
+      <div class="panel-state">
+        <div class="panel-state-bar" v-bind:class="[stateBarCls]"></div>
+        <div class="panel-state-text font-tip-title">{{stateBarText}}</div>
+      </div>
+
+      <div v-if="state !== 'input-name'">
+        <button class="admin-reset font-tip-title" v-if="isAdmin" v-on:click="resetCmd">
+          <!-- <img src="./client/reset.png" alt=""> -->
+        
+        </button>
+      </div>
+
+      <div class="admin-btn-panel" v-if="isAdmin && adminButtonText !== 'error'">
+        <button class="admin-btn" v-on:click="adminCmd">{{adminButtonText}}</button>
+      </div>
+      <!-- input panel area -->
+      <div class="name-input-panel" v-if="state === 'input-name'">
+        <input class="name-input font-sec-title" placeholder="请输入你的名字" v-model="username">
+        <div class="name-input-submit-div">
+          <button class="name-input-submit-btn" v-on:click="sendName">提交</button>
+        </div>
+      </div>
+
+      <!-- waiting panel area -->
+      <div class="waiting-panel" v-if="state === 'waiting'">
+        <div v-if="!isAdmin">
+          <!-- <div class="waiting-panel-text-second"><img src="./client/loding.gif" alt=""></div> -->
+          <div class=" waiting-panel-text font-sec-title">游戏马上开始 :)
+            <br> 请耐心等待</div>
+        </div>
+
+        <div v-if="isAdmin">
+          <div class="font-sec-title">
+            所选题库：
+            <input class="admin-question-category font-sec-title" v-model="admin.question_category" placeholder="请选择题库">
+          </div>
+          <div class="font-sec-title">
+            获胜人数：
+            <input class="admin-winners-count font-sec-title" v-model="admin.winners_count" placeholder="请选择获胜者人数">
+          </div>
+        </div>
+
+      </div>
+
+      <!-- question panel area -->
+      <div class="question-panel" v-if="state === 'question'">
+        <div class="question-desc font-title">{{question.title}}</div>
+        <div class="question-options">
+          <div class="question-option font-content" v-for="index in [0, 1, 2]" v-bind:class="[questionClses[index]]" v-on:click="selectAnswer(index)">
+            {{question.options[index]}}
+          </div>
+        </div>
+      </div>
+
+      <!-- answer panel area -->
+      <div class="question-panel" v-if="state === 'answer'">
+        <div class="question-desc font-title">{{answer.title}}</div>
+        <div class="question-options">
+          <div v-for="index in [0, 1, 2]" v-bind:class="[answerClses[index]]" class="answer-option font-content">
+            <div class="answer-option-progress" v-bind:style="{width: answerStatWidth[index]}"></div>
+            <div class="option-text">{{answer.options[index]}}</div>
+            <div class="option-selected-num">{{answer.stat[index]}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- finish panel area -->
+      <div class="finish-panel" v-if="state === 'finish'">
+        <div v-if="finish.winners.length==0" class="finish-panel-text font-sec-title">游戏已经结束，
+          <br>很遗憾，本期没有获胜者</div>
+        <div v-if="finish.winners.length>0" class="finish-panel-text">
+          <p class="font-tip-title finish-title">游戏已经结束</p>
+
+          <div v-if="finish.winners.length==1">
+            <p class="font-title finish-title finish-reward">获奖名单
+
+            </p>
+            <p class="font-content">
+              <span v-for="winner in finish.winners">{{winner}}</span>
+            </p>
+          </div>
+
+          <div v-if="finish.winners.length==2">
+            <p class="font-title finish-title finish-reward">获奖名单</p>
+            <p class="font-content">
+              <span v-for="winner in finish.winners">&#x3000;{{winner}}&#x3000; </span>
+            </p>
+          </div>
+
+          <div v-if="finish.winners.length > 2">
+            <p class="font-title finish-title finish-reward">获奖名单</p>
+            <div class="finish-name-list">
+              <div class="finish-name-list-evert font-content" v-for="winner in finish.winners">{{winner}}</div>
+            </div>
+            <!-- <span class="font-sec-title" v-for="winner in finish.winners">{{winner}}</span> -->
+          </div>
+
+
+          <!-- <p class="font-sec-title">获胜者</p>
+          
+          <span class="finish-winners-item font-sec-content" v-for="winner in finish.winners">
+              {{winner}}
+          </span> -->
+
+        </div>
+        <!-- <div>
+          <div class="finish-winners-list">
+            <span class="finish-winners-item" v-for="winner in finish.winners">
+              {{winner}}
+            </span>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <script>
+      FastClick.attach(document.body);
+    </script>
+
+    <script type="text/javascript" src="./client/main.js"></script>
+</body>
+
+</html>
