@@ -1,8 +1,6 @@
 # 应用截图
 ![普通用户](docs/pics/0.png)
 ![普通用户](docs/pics/1.png)
-![管理员](docs/pics/2.png)
-![管理员](docs/pics/3.png)
 # 整体架构
 整体架构采用前后端分离架构，前端为 front-server 文件夹，服务端为 backend-server 文件夹.
 前端与服务端分别采用不同的域名，并进行了跨域配置

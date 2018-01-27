@@ -11,7 +11,7 @@ var app = new Vue({
   data: {
     state: 'waiting', // input-name, waiting, question, answer, finish
     alive: false,
-    isAdmin: false, 
+    isAdmin: false,
     online_user: 0,
     username: "",
     admin: {
@@ -43,7 +43,7 @@ var app = new Vue({
       if (this.state === 'question') {
         if (this.question.timeCount > 4) {
           return "panel-state-bar-healthy"
-        } 
+        }
         if (this.question.timeCount > 0) {
           return "panel-state-bar-danger"
         }
@@ -92,7 +92,7 @@ var app = new Vue({
       var sum = 0;
       var widthList = [];
       sum = this.answer.stat[0] + this.answer.stat[1] + this.answer.stat[2];
-      
+
       if (sum === 0) {
         return ["10%", "10%", "10%"];
       }
@@ -133,7 +133,7 @@ var app = new Vue({
       if (this.question.selected_index < 0) {
         return ["question-option-available", "question-option-available", "question-option-available"]
       }
-    
+
       // 已经选择
       var resCls = [];
       for (var i = 0; i<3; i++) {
@@ -189,9 +189,9 @@ var app = new Vue({
           && this.question.selected_index === -1
       ) {
         this.question.selected_index = index;
-        ws.send(JSON.stringify({ 
+        ws.send(JSON.stringify({
           command: "question_ack",
-          question_id: this.question.id, 
+          question_id: this.question.id,
           selected_index: this.question.selected_index
         }));
       }
@@ -232,9 +232,16 @@ var startTimeCount = function() {
 };
 
 /********************************* 注册 socket，并接收 socket 信息 ***********************************/
+var ws = null;
 
 // 构建初始 socket
 function buildSocket() {
+  // 如果已经创建，则退出，防止多次创建
+  if (ws) {
+    console.log("Avoiding recreate the websocket");
+    return;
+  }
+
   console.log("building socket...");
 
   ws = new ReconnectingWebSocket("ws://" + config.apiServerHostPort  + "/ws", null, {
@@ -243,7 +250,7 @@ function buildSocket() {
   ws.onopen = function(evt) {
     console.log("Connection open ...");
   };
-  
+
   ws.onclose = function(evt) {
     console.log("Connection closed...");
   };
