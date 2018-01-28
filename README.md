@@ -60,3 +60,4 @@
 以下是给我们项目做贡献的兄弟
 * [@Liu-Huaqing](https://github.com/Liu-Huaqing)
 * [@echobfy](https://github.com/echobfy)
+* [@zhoustudent](https://github.com/zhoustudent)
