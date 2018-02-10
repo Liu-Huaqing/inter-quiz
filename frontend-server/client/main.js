@@ -9,8 +9,8 @@ var config = {
 var app = new Vue({
   el: '#app',
   data: {
-    state: 'waiting', // input-name, waiting, question, answer, finish
-    alive: false,
+    state: 'finish', // input-name, waiting, question, answer, finish
+    alive: true,
     isAdmin: false,
     online_user: 0,
     username: "",
@@ -35,7 +35,7 @@ var app = new Vue({
       answer_animation_delay: 500
     },
     finish: {
-      winners: ["小王小","小李","小王小","小李","小王小","小李","小王小","小李","小王小","小李","小王小","小李","小王小","小李","小王小","小李","小王小","小李","小王小","小李","小王小","小李","小王小","小李","小王小","小李"]
+      winners: ["小王小","小李"]
     }
   },
   computed: {
